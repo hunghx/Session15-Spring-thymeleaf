@@ -1,0 +1,15 @@
+package ra.springthymeleaf.model.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class Student {
+    private int id, age;
+    private String name;
+}

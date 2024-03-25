@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:insert="~{hello :: navbar(${name},${age})}">
+
+</th:block>
+
+<p th:text="'Tên : '+${name}">ưqđggjhjne</p>
+<p th:text="|Tuổi : ${age}|">dưedwedwedewdwed</p>
+
+<!--Object-->
+<ul th:object="${student}">
+    <li th:text="*{id}"></li>
+    <li th:text="*{name}"></li>
+    <li th:text="*{age}"></li>
+</ul>
+<!--html-->
+<p th:text="${span}"></p>
+<p th:utext="${span}"></p>
+
+<!--message-->
+<h3 th:text="#{parah.title}"></h3>
+<p th:text="#{parah.content}"></p>
+
+<!--url-->
+<a th:href="@{http://localhost:8080/student/edit(id=${student.id})}" th:text="${student.name}"></a>
+<!--http://localhost:8080/student/edit?id=1-->
+<a th:href="@{/student/edit(id=${student.id})}" th:text="${student.name}"></a>
+<!--http://localhost:8080/student/edit?id=1-->
+<a th:href="@{/student/{id}/edit/{id}(id=${student.id})}" th:text="${student.name}"></a>
+<!--/student/1/edit/1-->
+<a th:href="|/student/${student.id}/edit/${student.id}|" th:text="${student.name}"></a>
+
+
+<!--for each -->
+<li th:each="num,loop : ${#numbers.sequence(1,20)}" th:text="${loop.count}" >
+</li>
+
+<p th:if="${age<18}">
+    tuổi < 18
+</p>
+<p th:unless="${age<18}">
+    tuổi >=18
+</p>
+
+
+<!--switch case-->
+<div th:switch="${age}">
+    <p th:case="10">Bạn tròn 10 tuổi</p>
+    <p th:case="18">Bạn đủ tuổi đi tù</p>
+    <p th:case="60">Nghỉ hưu nhé</p>
+    <p th:case="100">Rip</p>
+    <p th:case="*">Trường hợp khác , ko co gì đặc biệt</p>
+</div>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" id="file">
+    <input type="submit" value="Send">
+</form>
+
+</body>
+</html>
