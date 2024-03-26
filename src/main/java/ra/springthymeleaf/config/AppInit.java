@@ -1,8 +1,5 @@
 package ra.springthymeleaf.config;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -11,9 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -24,11 +23,12 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement // hoox tro quan li transaction
 @ComponentScan(basePackages = "ra.springthymeleaf")
 public class AppInit implements WebMvcConfigurer, ApplicationContextAware {
     private ApplicationContext applicationContext;
@@ -66,31 +66,51 @@ public class AppInit implements WebMvcConfigurer, ApplicationContextAware {
         return viewResolver;
     }
 
-    // cấu hình jbdc template
+    // cấu hình hibernate
 
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/view_thymleaf?createDatabaseIfNotExist=true");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/orm_hibernate?createDatabaseIfNotExist=true");
         dataSource.setUsername("root");
         dataSource.setPassword("hung18061999");
         return dataSource;
     }
+
+    // cấu hình quản các doi tương
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setPackagesToScan("ra.springthymeleaf.model.entity");
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
+    }
+
+    @Bean
+    public Properties hibernateProperties(){
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("hibernate.show_sql", "true");
+        return properties;
+    }
+    // transaction
+
+    @Bean
+    public HibernateTransactionManager transactionManager(){
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory().getObject());
+        return transactionManager;
+    }
+
     @Bean
     public JdbcTemplate jdbcTemplate(){
         return new JdbcTemplate(dataSource());
     }
 
-    @Bean
-    public Storage storage() throws IOException {
-        InputStream inputStream = new ClassPathResource("firebase-config.json").getInputStream();
-//        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("firebase-config.json");
-        return StorageOptions.newBuilder()
-                .setCredentials(GoogleCredentials.fromStream(inputStream))
-                .build()
-                .getService();
-    }
+
 
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver getResolver()  {
@@ -114,4 +134,7 @@ public class AppInit implements WebMvcConfigurer, ApplicationContextAware {
         registry.addResourceHandler("/css/**","/js/**","/img/**")
                 .addResourceLocations("classpath:/static/css/","classpath:/static/js/","classpath:/static/img/");
     }
+
+
+
 }
