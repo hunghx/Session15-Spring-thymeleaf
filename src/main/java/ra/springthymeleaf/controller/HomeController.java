@@ -1,12 +1,16 @@
 package ra.springthymeleaf.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ra.springthymeleaf.repository.IProductRepository;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
-//    @RequestMapping
+
+//    @RequestMapping('')
 //    public  String home(Model model){
 //        model.addAttribute("name","Nguyễn Văn A");
 //        model.addAttribute("age",20);

@@ -26,8 +26,7 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
-    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.18'
+
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
     compileOnly 'org.projectlombok:lombok:1.18.16'
@@ -35,21 +34,19 @@ dependencies {
     // firebase
     // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
-// https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
-    implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+
     // thymeleaf
     // thymeleaf
     implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.11.RELEASE'
     implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.5.2'
     implementation 'org.springframework:spring-webmvc:5.3.18'
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
-    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.10.Final'
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
-    implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.10.Final'
-// https://mvnrepository.com/artifact/org.springframework/spring-orm
-    implementation group: 'org.springframework', name: 'spring-orm', version: '4.3.25.RELEASE'
-
-
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.3.0.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.3.0.Final'
+    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.2'
+  // jp
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.4.2'
+//    // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+//    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
 
 }
 

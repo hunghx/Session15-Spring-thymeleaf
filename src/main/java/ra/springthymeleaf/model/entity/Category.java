@@ -21,7 +21,7 @@ public class Category {
     private Long categoryId;
     @Column(name = "name")
     private String categoryName;
-    @OneToMany(mappedBy = "category") // anh xa theo thuoc tinh quan he sang thuc the chủ the
-    private List<Product> products;
+//    @OneToMany(mappedBy = "category") // anh xa theo thuoc tinh quan he sang thuc the chủ the
+//    private List<Product> products;
 
 }

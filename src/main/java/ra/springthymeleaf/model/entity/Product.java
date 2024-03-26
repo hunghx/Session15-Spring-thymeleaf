@@ -22,7 +22,7 @@ public class Product { // thuc the n - 1
     private String productName;
     @Column(name = "price")
     private BigDecimal productPrice;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name ="category_id")
     private Category category;
 }
