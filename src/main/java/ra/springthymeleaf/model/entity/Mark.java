@@ -18,11 +18,11 @@ public class Mark { // chu the
     private MarkId markId;
     @ManyToOne
     @MapsId("subjectId")
-    @JoinColumn(foreignKey = @ForeignKey(name = "DMMH_MaMH_fk"))
+    @JoinColumn(name = "MaMH",foreignKey = @ForeignKey(name = "DMMH_MaMH_fk"))
     private Subject subject;
     @ManyToOne
     @MapsId("studentId")
-    @JoinColumn(foreignKey = @ForeignKey(name = "KetQua_MaSV_fk"))
+    @JoinColumn(name = "MaSV",foreignKey = @ForeignKey(name = "KetQua_MaSV_fk"))
     private Student student;
     @Column(name = "Diem",precision = 4,scale = 2)
     private BigDecimal score;

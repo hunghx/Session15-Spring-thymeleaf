@@ -83,6 +83,7 @@ public class AppInit implements WebMvcConfigurer, ApplicationContextAware {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("ra.springthymeleaf.model.entity");
+        sessionFactory.setEntityInterceptor(new SqlParamInterceptor());
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
