@@ -52,8 +52,5 @@ public class CookiesController {
         return "cookies";
 
     }
-    @RequestMapping("/login")
-    public  String doLogin(){
-        session.
-    }
+
 }
